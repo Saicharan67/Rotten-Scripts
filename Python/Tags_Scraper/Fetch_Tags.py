@@ -45,7 +45,7 @@ class FetchTags:
         """get_html method returns the html of the url passed"""
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         try:
-            response = requests.get(url, headers=self.usr_agent, verify=False)
+            response = requests.get(url, headers=self.usr_agent, verify=True)
             response.raise_for_status()
             return response.text
         except:
@@ -115,14 +115,14 @@ class FetchTags:
 
         if len(h2_list) != 0:
             for line in h2_list:
-                if line != None:
+                if line is not None:
                     for word in line.split():
                         if word not in special_characteres:
                             self.h2_dict[word] = self.h2_dict.get(word, 0) + 1
 
         if len(h3_list) != 0:
             for line in h3_list:
-                if line != None:
+                if line is not None:
                     for word in line.split():
                         if word not in special_characteres:
                             self.h3_dict[word] = self.h3_dict.get(word, 0) + 1

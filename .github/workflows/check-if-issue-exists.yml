@@ -1,0 +1,36 @@
+name: PR has a valid Issue?
+
+on:
+  pull_request_target:
+    types: [ edited, synchronize, opened, reopened ]
+
+jobs:
+  checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: "Issue number validator"
+        uses: HarshCasper/validate-issues-over-pull-requests@v0.1.1
+        id: validator
+        with:
+          prbody: ${{ github.event.pull_request.body }}
+          prurl: ${{ github.event.pull_request.url }}
+
+      - name: PR has a valid Issue
+        if: ${{ steps.validator.outputs.valid == 1 }}
+        run: |
+          gh pr edit $PRNUM --add-label "PR:Ready-to-Review"
+          gh pr edit $PRNUM --remove-label "PR:No-Issue"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PRNUM: ${{ github.event.pull_request.number }}
+
+      - name: PR has no valid Issue
+        if: ${{ steps.validator.outputs.valid == 0 }}
+        run: |
+          gh pr comment $PRNUM --body "PR is not linked to any issue, please make the corresponding changes in the body. The issue should look like [this](https://ibb.co/Bg9x53w). For help follow this [link](https://github.com/HarshCasper/Rotten-Scripts/blob/master/CONTRIBUTING.md)"
+          gh pr edit $PRNUM --add-label "PR:No-Issue"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PRNUM: ${{ github.event.pull_request.number }}

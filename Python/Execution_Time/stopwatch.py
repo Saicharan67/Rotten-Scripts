@@ -17,17 +17,15 @@ class Stopwatch:
         else:
             # Default to tenths of a second.
             self.__precision__ = 1
-        return
 
     def start(self):
         # Start the stopwatch.
         if not self.state == "Stopped":
             print("Stopwatch is already running.")
-            return
-        else:
-            self.__startTime__ = time.time()
-            self.state = "Started"
-        return
+            return None
+
+        self.__startTime__ = time.time()
+        self.state = "Started"
 
     def lap(self):
         # Start tracking a new lap.
@@ -36,7 +34,6 @@ class Stopwatch:
         self.__currentLap__ = 0
         self.__startTime__ = time.time()
         self.__update__()
-        return
 
     def stop(self):
         # Stop/Pause the stopwatch without clearing it.
@@ -45,7 +42,6 @@ class Stopwatch:
         else:
             self.__update__()
             self.state = "Stopped"
-        return
 
     def reset(self):
         # Reset the entire stopwatch back to zero.
@@ -54,7 +50,6 @@ class Stopwatch:
         self.laps = []
         self.summary = None
         self.state = "Stopped"
-        return
 
     def __update__(self):
         # Internal function to update stopwatch summary.
@@ -94,4 +89,3 @@ class Stopwatch:
                 )
             ).rjust(7)
         )
-        return

@@ -107,7 +107,7 @@ with tf.device("/gpu:0"):
         :param descriptions: Captions
         :param filename: Destination file
         """
-        lines = list()
+        lines = []
         for key, desc_list in descriptions.items():
             for desc in desc_list:
                 lines.append(key + "\t" + desc)
@@ -235,7 +235,6 @@ with tf.device("/gpu:0"):
     # this will provide a vectorised text corpus
     # each integer will represent token in dictionary
 
-    from keras.preprocessing.text import Tokenizer
 
     def create_tokenizer(descriptions):
         """
@@ -292,7 +291,7 @@ with tf.device("/gpu:0"):
         :param feature: Features of the images
         :return: Data generated in sequence of Arrays
         """
-        X1, X2, y = list(), list(), list()
+        X1, X2, y = [], [], []
         # walk through each description for the image
         for desc in desc_list:
             # encode the sequence

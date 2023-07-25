@@ -43,7 +43,6 @@ def hasNumbers(inputString):
 
 
 def try_again():
-    import sys
 
     retry = input("Do you want to try again. Enter 1 for yes and anything for no")
     if retry != "1":
@@ -69,7 +68,7 @@ if __name__ == "__main__":
                     try_again()
                 else:
                     key = int(input("Please enter the key"))
-                    if isinstance(key, int) == False:
+                    if isinstance(key, int) is False:
                         print("Only integers are allowed for key")
                         try_again()
                     else:
@@ -83,7 +82,7 @@ if __name__ == "__main__":
                     try_again()
                 else:
                     key = int(input("Please enter the key"))
-                    if isinstance(key, int) == False:
+                    if isinstance(key, int) is False:
                         print("Only integers are allowed for key")
                         try_again()
                     else:
